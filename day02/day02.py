@@ -7,9 +7,10 @@ def resolve_position_part_one(actions):
         "down": np.array([0, 1]),
         "up": np.array([0, -1])
     }
-    my_position = sum(
-        [direction_map[action[0]] * int(action[1]) for action in actions]
-    )
+    my_position = sum([
+        direction_map[direction] * int(amount)
+        for (direction, amount) in actions
+    ])
     return my_position[0]*my_position[1]
 
 
@@ -17,7 +18,7 @@ def resolve_position_part_two(actions):
     my_position = np.array([0, 0])
     aim = 0
     for (direction, amount) in actions:
-        if direction in "up":
+        if direction == "up":
             aim -= int(amount)
         if direction == "down":
             aim += int(amount)
