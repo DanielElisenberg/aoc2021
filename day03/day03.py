@@ -4,8 +4,7 @@ from typing import Callable
 BIT_STRING_LENGTH = 12
 
 
-def most_common_bit(bit_strings: list, position: int,
-                    return_on_equal: str) -> str:
+def most_common_bit(bit_strings: list, position: int) -> str:
     ones = len(
         [1 for bit_string in bit_strings if bit_string[position] == "1"]
     )
@@ -13,24 +12,21 @@ def most_common_bit(bit_strings: list, position: int,
         [1 for bit_string in bit_strings if bit_string[position] == "0"]
     )
     if ones == zeros:
-        return return_on_equal
+        return "1"
     else:
         return "1" if ones > zeros else "0"
 
 
-def least_common_bit(bit_strings: list, position: int, return_on_equal: str):
-    most_common = most_common_bit(
-        bit_strings, position, "0" if return_on_equal == "1" else "1"
-    )
+def least_common_bit(bit_strings: list, position: int):
+    most_common = most_common_bit(bit_strings, position)
     return "0" if most_common == "1" else "1"
 
 
-def locate_rating_value(diagnostic_report: list, filter: Callable,
-                        return_on_equal: int) -> str:
+def locate_rating_value(diagnostic_report: list, filter: Callable) -> str:
     position = 0
     remaining_bit_strings = diagnostic_report
     while len(remaining_bit_strings) > 1:
-        filter_bit = filter(remaining_bit_strings, position, return_on_equal)
+        filter_bit = filter(remaining_bit_strings, position)
         filtered_list = [
             bit_string for bit_string in remaining_bit_strings
             if bit_string[position] == filter_bit
@@ -47,7 +43,7 @@ if __name__ == "__main__":
         ]
 
     most_common_bits = ''.join([
-        most_common_bit(diagnostic_report, position, "1")
+        most_common_bit(diagnostic_report, position)
         for position in range(BIT_STRING_LENGTH)
     ])
 
@@ -56,10 +52,10 @@ if __name__ == "__main__":
         ''.join(["0" if bit == "1" else "1" for bit in most_common_bits]), 2
     )
     oxygen_generator_rating = locate_rating_value(
-        diagnostic_report, most_common_bit, "1"
+        diagnostic_report, most_common_bit
     )
     co2_scrubber_rating = locate_rating_value(
-        diagnostic_report, least_common_bit, "0"
+        diagnostic_report, least_common_bit
     )
 
     print(
