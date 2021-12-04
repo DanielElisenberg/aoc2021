@@ -2,8 +2,8 @@ BOARD_SIZE = 5
 
 
 class Board():
-    def __init__(self, board):
-        self.board = board
+    def __init__(self, content):
+        self.board = [line.split() for line in content]
         self.has_won = False
 
     def mark(self, called_number: int) -> None:
@@ -31,14 +31,7 @@ class Board():
         )
 
 
-def generate_boards(input: list) -> list[Board]:
-    boards = [
-        input[i:i+BOARD_SIZE] for i in range(0, len(input), BOARD_SIZE+1)
-    ]
-    return [Board(board) for board in boards]
-
-
-def play_bingo(numbers_to_draw: int, boards: list) -> list[int]:
+def play_bingo(numbers_to_draw: list, boards: list) -> list[int]:
     winners = []
     for number in numbers_to_draw:
         for board in boards:
@@ -53,10 +46,13 @@ def play_bingo(numbers_to_draw: int, boards: list) -> list[int]:
 if __name__ == "__main__":
     with open('day04/input') as input_file:
         input = [
-            line.strip('\n') for line in input_file.readlines()
+            line.strip() for line in input_file.readlines()
         ]
     numbers_to_draw = input[0].split(",")
-    boards = generate_boards([line.split() for line in input[2:]])
+    boards = [
+        Board(input[i:i+BOARD_SIZE])
+        for i in range(2, len(input), BOARD_SIZE+1)
+    ]
     winners = play_bingo(numbers_to_draw, boards)
 
     print(
