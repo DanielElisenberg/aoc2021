@@ -41,18 +41,19 @@ def parse_line(line: str) -> Tuple[list, int]:
 
 
 if __name__ == "__main__":
-    syntax_error_score = 0
-    completion_points = []
-
     with open('day10/input') as input_file:
-        for line in input_file.readlines():
-            open_chunks, line_syntax_error_score = parse_line(line.strip())
-            if line_syntax_error_score:
-                syntax_error_score += line_syntax_error_score
-            else:
-                completion_points.append(
-                    completion_points_for_line(open_chunks)
-                )
+        parsed_lines = [
+            parse_line(line.strip()) for line in input_file.readlines()
+        ]
+
+    syntax_error_score = sum(
+        [line_error_score for (_, line_error_score) in parsed_lines]
+    )
+    completion_points = [
+        completion_points_for_line(open_chunks)
+        for (open_chunks, line_error_score) in parsed_lines
+        if not line_error_score
+    ]
     completion_points.sort()
     print(
         f"""Day 10:
