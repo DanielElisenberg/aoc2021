@@ -51,7 +51,9 @@ def find_synchronization_step(octopus_map: dict) -> int:
     while not all_flash:
         counter += 1
         run_step(octopus_map)
-        all_flash = all([energy_level == 0 for energy_level in octopus_map.values()])
+        all_flash = all([
+            energy_level == 0 for energy_level in octopus_map.values()
+        ])
     return counter
 
 
