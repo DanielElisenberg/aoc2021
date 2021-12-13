@@ -21,8 +21,8 @@ def fold_paper(coordinates: list, fold_instructions: list) -> list:
 
 
 def print_instruction(marked_dots: list) -> str:
-    max_x = max([key[0] for key in marked_dots])
-    max_y = max([key[1] for key in marked_dots])
+    max_x = max([dot[0] for dot in marked_dots])
+    max_y = max([dot[1] for dot in marked_dots])
     instruction = ''
 
     for y in range(max_y+1):
