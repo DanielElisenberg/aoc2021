@@ -1,8 +1,3 @@
-from typing import Tuple
-from collections import defaultdict
-import time
-
-
 class Point:
     def __init__(self, x, y, risk):
         self.x = x
