@@ -144,7 +144,7 @@ def parse_snailfish_number(snailfish_notation: str) -> Pair:
 def magnitude_of_final_sum(lines: list) -> int:
     snailfish_number = parse_snailfish_number(lines[0])
     for line in lines[1:]:
-        snailfish_number = snailfish_number + parse_snailfish_number(line)
+        snailfish_number += parse_snailfish_number(line)
     return snailfish_number.magnitude()
 
 
