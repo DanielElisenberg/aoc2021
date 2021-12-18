@@ -104,6 +104,15 @@ class Pair:
             add_to_tree = add_to_tree.right
         add_to_tree.right += value
 
+    def __add__(self, other):
+        combined = Pair(
+            left=self,
+            right=other
+        )
+        self.parent = other.parent = combined
+        combined.reduce()
+        return combined
+
     def __str__(self) -> str:
         return f"[{str(self.left)},{str(self.right)}]"
 
@@ -135,14 +144,7 @@ def parse_snailfish_number(snailfish_notation: str) -> Pair:
 def magnitude_of_final_sum(lines: list) -> int:
     snailfish_number = parse_snailfish_number(lines[0])
     for line in lines[1:]:
-        snailfish_number_to_add = parse_snailfish_number(line)
-        combined = Pair(
-            left=snailfish_number,
-            right=snailfish_number_to_add
-        )
-        snailfish_number.parent = snailfish_number_to_add.parent = combined
-        combined.reduce()
-        snailfish_number = combined
+        snailfish_number = snailfish_number + parse_snailfish_number(line)
     return snailfish_number.magnitude()
 
 
